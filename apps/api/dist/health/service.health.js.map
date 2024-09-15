@@ -1,0 +1,1 @@
+{"version":3,"file":"service.health.js","sourceRoot":"","sources":["../../src/health/service.health.ts"],"names":[],"mappings":";;;AAAA,+CAAmD;AAEnD,MAAa,sBAAuB,SAAQ,0BAAe;IAClD,KAAK,CAAC,GAAW;QACtB,MAAM,SAAS,GAAG,IAAI,CAAC;QACvB,OAAO,IAAI,CAAC,SAAS,CAAC,GAAG,EAAE,SAAS,CAAC,CAAC;IACxC,CAAC;CACF;AALD,wDAKC"}

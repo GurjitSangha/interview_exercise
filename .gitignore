@@ -3,6 +3,8 @@
 /dist
 /node_modules
 
+.turbo
+
 # Logs
 logs
 *.log

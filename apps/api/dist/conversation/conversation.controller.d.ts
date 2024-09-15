@@ -1,0 +1,30 @@
+import { ConfigService } from '@nestjs/config';
+import { ConversationLogic } from './conversation.logic';
+import { ConversationMigrationLogic } from '../migrations/conversation/conversation.migration.logic';
+import { AddMemberDTO } from './models/AddMember.dto';
+import { ChatConversation } from './models/ChatConversation.entity';
+import { CreateChatConversationDto, Tag } from './models/CreateChatConversation.dto';
+import { BlockUserDTO } from './models/blockUser.dto';
+import { MigratePermissionsDTO } from './models/migratePermissions.dto';
+import { UnreadCountOutput } from './models/unreadCount.dto';
+import { DirectChatConversationDto } from './dto/DirectChatConversationDto';
+import { MessageGroupedByConversationOutput } from './models/messagesFilterInput';
+import { Response } from 'express';
+export declare class ConversationController {
+    private conversationLogic;
+    private conversationMigrationLogic;
+    private configService;
+    constructor(conversationLogic: ConversationLogic, conversationMigrationLogic: ConversationMigrationLogic, configService: ConfigService);
+    create(createChatConversationDto: CreateChatConversationDto): Promise<ChatConversation>;
+    createDirectConversation(directChatConvDto: DirectChatConversationDto): Promise<ChatConversation>;
+    update(conversationId: string, createChatConversationDto: CreateChatConversationDto): void;
+    updateTags(conversationId: string, tags: Tag[]): Promise<ChatConversation>;
+    addMember(conversationId: string, addMember: AddMemberDTO): Promise<import("./models/conversation.model").ChatConversationModel>;
+    deleteMember(conversationId: string, memberId: string): Promise<import("./models/conversation.model").ChatConversationModel>;
+    blockMember(blockUserDTO: BlockUserDTO): Promise<void>;
+    unblockMember(blockUserDTO: BlockUserDTO): Promise<void>;
+    migratePermissions(migratePermissionsDto: MigratePermissionsDTO): Promise<void>;
+    migrateLastMessages(): Promise<boolean>;
+    getUnreadMessageCounts(userId: string, conversationIds: string[]): Promise<UnreadCountOutput[]>;
+    getMessages(conversationIds: string[], startDate: string, endDate: string, res: Response): Promise<MessageGroupedByConversationOutput[]>;
+}

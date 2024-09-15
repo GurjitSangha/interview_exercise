@@ -1,0 +1,1 @@
+{"version":3,"file":"unreadCount.dto.js","sourceRoot":"","sources":["../../../src/conversation/models/unreadCount.dto.ts"],"names":[],"mappings":";;;;;AAAA,6CAA8C;AAI9C,MAAa,gBAAgB;;;;CAY5B;AAPC;IAJC,IAAA,qBAAW,EAAC;QACX,QAAQ,EAAE,IAAI;QACd,WAAW,EAAE,2DAA2D;KACzE,CAAC;;gDACa;AAMf;IAJC,IAAA,qBAAW,EAAC;QACX,WAAW,EACT,qEAAqE;KACxE,CAAC;;yDACyB;AAX7B,4CAYC"}

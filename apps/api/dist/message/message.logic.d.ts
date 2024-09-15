@@ -1,0 +1,51 @@
+import { ChatMessage, PaginatedChatMessages } from './models/message.entity';
+import { MessageDto, GetMessageDto, DeleteMessageDto, LikeMessageDto, ResolveMessageDto, ReactionDto, TagsDto } from './models/message.dto';
+import { MessageData } from './message.data';
+import { IAuthenticatedUser } from '../authentication/jwt.strategy';
+import { PermissionsService } from '../permissions/permissions.service';
+import { ConversationChannel } from '../conversation/conversation-channel.socket';
+import { UserService } from '../user/user.service';
+import { ConversationData } from '../conversation/conversation.data';
+import { SafeguardingService } from '../safeguarding/safeguarding.service';
+import { ObjectID } from 'mongodb';
+import { ConversationLogic } from '../conversation/conversation.logic';
+import { UserBlocksLogic } from '../user-blocks/user-blocks.logic';
+import { ChatMessageModel } from './models/message.model';
+import { MessageGroupedByConversationOutput, MessagesFilterInput } from '../conversation/models/messagesFilterInput';
+export interface IMessageLogic {
+    create(messageDto: MessageDto, authenticatedUser?: IAuthenticatedUser): Promise<ChatMessage>;
+    getChatConversationMessages(getMessageDto: GetMessageDto, authenticatedUser?: IAuthenticatedUser): Promise<PaginatedChatMessages>;
+    resolve(resolveMessageDto: ResolveMessageDto, authenticatedUser?: IAuthenticatedUser): Promise<ChatMessage>;
+    getMessagesByConversation(messagesFilterInput: MessagesFilterInput): Promise<MessageGroupedByConversationOutput[]>;
+}
+export declare class MessageLogic implements IMessageLogic {
+    private conversationLogic;
+    private messageData;
+    private permissions;
+    private conversationChannel;
+    private userService;
+    private conversationData;
+    private safeguardingService;
+    private userBlocks;
+    constructor(conversationLogic: ConversationLogic, messageData: MessageData, permissions: PermissionsService, conversationChannel: ConversationChannel, userService: UserService, conversationData: ConversationData, safeguardingService: SafeguardingService, userBlocks: UserBlocksLogic);
+    create(messageDto: MessageDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    private mapRichContent;
+    getMessage(messageId: ObjectID, authenticatedUser: IAuthenticatedUser): Promise<ChatMessageModel>;
+    private getBlockedUserIds;
+    getChatConversationMessages(getMessageDto: GetMessageDto, authenticatedUser: IAuthenticatedUser): Promise<PaginatedChatMessages>;
+    getMessagesByConversation(messagesFilterInput: MessagesFilterInput): Promise<MessageGroupedByConversationOutput[]>;
+    private setIsSenderBlockedTrue;
+    delete(deleteMessageDto: DeleteMessageDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    resolve(resolveMessageDto: ResolveMessageDto, authenticatedUser?: IAuthenticatedUser): Promise<ChatMessage>;
+    unresolve(resolveMessageDto: ResolveMessageDto, authenticatedUser?: IAuthenticatedUser): Promise<ChatMessage>;
+    like(likeMessageDto: LikeMessageDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    unlike(likeMessageDto: LikeMessageDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    private throwForbiddenErrorIfNotAuthorized;
+    addReactionToMessage(reaction: ReactionDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    removeReactionFromMessage(reaction: ReactionDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    updateTags(tags: TagsDto, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    listByKeys(ids: ObjectID[]): Promise<ChatMessage[]>;
+    addVote(chatMessageId: ObjectID, option: string, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    removeVote(chatMessageId: ObjectID, option: string, authenticatedUser: IAuthenticatedUser): Promise<ChatMessage>;
+    private validateOption;
+}

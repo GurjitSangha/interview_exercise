@@ -1,0 +1,1 @@
+{"version":3,"file":"lastMessage.dto.js","sourceRoot":"","sources":["../../../src/conversation/models/lastMessage.dto.ts"],"names":[],"mappings":";;;;;AAAA,6CAA8C;AAM9C,MAAa,gBAAgB;;;;CAY5B;AAPC;IAJC,IAAA,qBAAW,EAAC;QACX,QAAQ,EAAE,IAAI;QACd,WAAW,EAAE,oDAAoD;KAClE,CAAC;;gDACa;AAMf;IAJC,IAAA,qBAAW,EAAC;QACX,WAAW,EACT,sEAAsE;KACzE,CAAC;;yDACyB;AAX7B,4CAYC"}

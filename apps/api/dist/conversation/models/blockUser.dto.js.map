@@ -1,0 +1,1 @@
+{"version":3,"file":"blockUser.dto.js","sourceRoot":"","sources":["../../../src/conversation/models/blockUser.dto.ts"],"names":[],"mappings":";;;;;AAAA,6CAA8C;AAE9C,MAAa,YAAY;;;;CAYxB;AAPC;IAJC,IAAA,qBAAW,EAAC;QACX,QAAQ,EAAE,IAAI;QACd,WAAW,EAAE,0CAA0C;KACxD,CAAC;;qDACwB;AAM1B;IAJC,IAAA,qBAAW,EAAC;QACX,QAAQ,EAAE,IAAI;QACd,WAAW,EAAE,gBAAgB;KAC9B,CAAC;;8CACe;AAXnB,oCAYC"}
