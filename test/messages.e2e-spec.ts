@@ -10,11 +10,13 @@ import {
   unlikeConversationMessage,
   resolveConversationMessage,
   unresolveConversationMessage,
+  updateTagsOfMessage,
 } from './helpers/gqlSnipetts';
 import {
   createConversationForTest,
   createConversationWithCommunityPermissions,
 } from './helpers/conversation.utils';
+import { text } from 'express';
 
 const dummyUserId = '597cfa3ac88c22000a74d167';
 
@@ -38,7 +40,10 @@ describe('Message', () => {
       },
     });
 
-    await mockServerClient(process.env.MOCK_USER_SERVICE ?? '', 1080).mockSimpleResponse(
+    await mockServerClient(
+      process.env.MOCK_USER_SERVICE ?? '',
+      1080,
+    ).mockSimpleResponse(
       `/api/v1/users/${dummyUserId}`,
       {
         id: dummyUserId,
@@ -126,6 +131,35 @@ describe('Message', () => {
         isSenderBlocked: false,
       },
     ]);
+  });
+
+  describe('Tags', () => {
+    it('user can add tags to a message', async () => {
+      const { id: conversationId } = await createConversationForTest();
+      const message = await client.request(sendConversationMessageMutation, {
+        messageDto: {
+          text: 'Message to tag',
+          conversationId: conversationId,
+        },
+      });
+
+      const tags = [{ id: 'tag1', type: 'chat' }];
+      const result = await client.request(updateTagsOfMessage, {
+        tagsDto: {
+          conversationId,
+          messageId: message.sendConversationMessage.id,
+          tags,
+        },
+      });
+
+      expect(result.errors).toBeUndefined();
+      expect(result.updateTagsOfMessage).toMatchObject({
+        tags,
+        id: message.sendConversationMessage.id,
+        text: 'Message to tag',
+        sender: { id: '597cfa3ac88c22000a74d167' },
+      });
+    });
   });
 
   describe('Like / Unlike Messages', () => {

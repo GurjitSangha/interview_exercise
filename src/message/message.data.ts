@@ -5,6 +5,7 @@ import {
   ChatMessageDocument,
   chatMessageToObject,
   ChatMessageModel,
+  Tag,
 } from './models/message.model';
 import { ChatMessage, PaginatedChatMessages } from './models/message.entity';
 import { MessageDto, GetMessageDto } from './models/message.dto';
@@ -257,6 +258,17 @@ export class MessageData {
     }
 
     return this.getMessage(messageId.toHexString());
+  }
+
+  async updateTags(messageId: ObjectID, tags: Tag[]): Promise<ChatMessage> {
+    const result = await this.chatMessageModel.findOneAndUpdate(
+      { _id: messageId },
+      { $set: { tags } },
+      { new: true },
+    );
+    if (!result) throw new Error('Could not update tags on message');
+
+    return chatMessageToObject(result);
   }
 
   async getMessages(ids: ObjectID[]): Promise<ChatMessage[]> {

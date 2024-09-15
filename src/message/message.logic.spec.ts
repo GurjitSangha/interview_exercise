@@ -8,6 +8,7 @@ import {
   GifType,
   MessageDto,
   PollDto,
+  TagType,
 } from './models/message.dto';
 import {
   ConversationChannel,
@@ -402,6 +403,22 @@ describe('MessageLogic', () => {
       );
     }
 
+    updateTags(messageId: ObjectID, tags: Tag[]) {
+      return {
+        _id: messageId,
+        text: 'Message 1',
+        senderId,
+        conversationId,
+        created: new Date('2018-05-11T17:47:40.893Z'),
+        sender: { id: '5fe0cce861c8ea54018385af' },
+        conversation: { id: '5fe0cce861c8ea54018385ae' },
+        id: messageId,
+        deleted: false,
+        resolved: true,
+        tags,
+      };
+    }
+
     addVote(messageId: ObjectID, userId: ObjectID, option: string) {
       return Promise.resolve(
         this.getMockMessage(messageId.toHexString(), userId.toHexString()),
@@ -549,7 +566,6 @@ describe('MessageLogic', () => {
   class MockConversationChannel {
     send = jest.fn();
   }
-
 
   class MockUserBlocksLogic implements IUserBlocksLogic {
     getBlockedUsers(
@@ -1288,6 +1304,17 @@ describe('MessageLogic', () => {
       );
 
       expect(messageData.removeReaction).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('updateTags', () => {
+    it('should call the data layer to update the tags', async () => {
+      jest.spyOn(messageData, 'updateTags');
+
+      const tags = { messageId, tags: [{ id: 'tag1', type: TagType.chat }] };
+      await messageLogic.updateTags(tags, validUser);
+
+      expect(messageData.updateTags).toHaveBeenCalledWith(messageId, tags.tags);
     });
   });
 

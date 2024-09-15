@@ -2,7 +2,7 @@ import { ObjectType, ID, Field, Float, Directive } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
 import { UserField, MessageSender } from '../../user/models/user.model';
 import { ChatConversation } from '../../conversation/models/ChatConversation.entity';
-import { AttachmentType, GifType } from './message.dto';
+import { AttachmentType, GifType, TagType } from './message.dto';
 import { Reaction } from './message.model';
 
 class ReplyMessageSocket {
@@ -84,6 +84,15 @@ export class Poll {
 }
 
 @ObjectType()
+export class Tag {
+  @Field()
+  id: string;
+
+  @Field(() => TagType)
+  type: TagType;
+}
+
+@ObjectType()
 export class RichMessageContent {
   @Field(() => ReplyMessage, { nullable: true })
   reply?: ReplyMessage;
@@ -148,6 +157,9 @@ export class ChatMessage {
 
   @Field({ defaultValue: false, nullable: true })
   isSenderBlocked?: boolean;
+
+  @Field(() => [Tag], { nullable: true })
+  tags?: Tag[];
 }
 
 /***

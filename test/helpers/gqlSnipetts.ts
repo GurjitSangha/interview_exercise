@@ -87,6 +87,23 @@ export const unlikeConversationMessage = gql`
   }
 `;
 
+export const updateTagsOfMessage = gql`
+  mutation ($tagsDto: TagsDto!) {
+    updateTagsOfMessage(tagsDto: $tagsDto) {
+      id
+      text
+      created
+      tags {
+        id
+        type
+      }
+      sender {
+        id
+      }
+    }
+  }
+`;
+
 export const resolveConversationMessage = gql`
   mutation ($resolveMessageDto: ResolveMessageDto!) {
     resolveConversationMessage(resolveMessageDto: $resolveMessageDto) {

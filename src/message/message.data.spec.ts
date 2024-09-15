@@ -6,6 +6,7 @@ import { ChatMessageModel, ChatMessageSchema } from './models/message.model';
 
 import { ConfigManagerModule } from '../configuration/configuration-manager.module';
 import { getTestConfiguration } from '../configuration/configuration-manager.utils';
+import { TagType } from './models/message.dto';
 
 const id = new ObjectID('5fe0cce861c8ea54018385af');
 const conversationId = new ObjectID();
@@ -100,6 +101,24 @@ describe('MessageData', () => {
       );
 
       expect(gotMessage).toMatchObject(sentMessage);
+    });
+  });
+
+  describe('tags', () => {
+    it('should update the tags of a message', async () => {
+      const conversationId = new ObjectID();
+      const sentMessage = await messageData.create(
+        { conversationId, text: 'Hello world' },
+        senderId,
+      );
+
+      const tags = [{ id: 'tag1', type: TagType.chat }];
+      const updatedMessage = await messageData.updateTags(
+        new ObjectID(sentMessage.id),
+        tags,
+      );
+
+      expect(updatedMessage.tags).toMatchObject(tags);
     });
   });
 

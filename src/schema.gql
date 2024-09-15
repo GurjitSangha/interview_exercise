@@ -29,14 +29,6 @@ type Reaction {
   userIds: [String!]!
 }
 
-type ChatConversation {
-  id: ID!
-  unreadMessageCount: Int
-  lastMessage: ChatMessage
-  pinnedMessages: [ChatMessage!]!
-  pinnedMessagesCount: Int!
-}
-
 type UserField {
   id: String
 }
@@ -87,6 +79,15 @@ type Poll {
   allowMultipleAnswers: Boolean!
 }
 
+type Tag {
+  id: String!
+  type: TagType!
+}
+
+enum TagType {
+  chat
+}
+
 type RichMessageContent {
   reply: ChatMessage
   giphy: Giphy
@@ -107,6 +108,7 @@ type ChatMessage {
   richContent: RichMessageContent
   reactions: [Reaction!]
   isSenderBlocked: Boolean
+  tags: [Tag!]
 }
 
 """
@@ -117,6 +119,14 @@ scalar DateTime
 type PaginatedChatMessages {
   messages: [ChatMessage!]!
   hasMore: Boolean!
+}
+
+type ChatConversation {
+  id: ID!
+  unreadMessageCount: Int
+  lastMessage: ChatMessage
+  pinnedMessages: [ChatMessage!]!
+  pinnedMessagesCount: Int!
 }
 
 type LastRead {
@@ -158,6 +168,7 @@ type Mutation {
   unlikeConversationMessage(likeMessageDto: LikeMessageDto!): ChatMessage!
   addReactionToMessage(reactionDto: ReactionDto!): ChatMessage!
   removeReactionFromMessage(reactionDto: ReactionDto!): ChatMessage!
+  updateTagsOfMessage(tagsDto: TagsDto!): ChatMessage!
   addVote(option: String!, chatMessageId: ObjectId!): Poll!
   removeVote(option: String!, chatMessageId: ObjectId!): Poll!
 }
@@ -246,4 +257,15 @@ input ReactionDto {
   reactionUnicode: String!
   messageId: ObjectId!
   conversationId: ObjectId!
+}
+
+input TagsDto {
+  messageId: ObjectId!
+  conversationId: ObjectId!
+  tags: [TagDto!]!
+}
+
+input TagDto {
+  id: String!
+  type: TagType!
 }

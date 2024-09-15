@@ -177,3 +177,33 @@ export class ReactionDto {
   @Field(() => ObjectID)
   conversationId: ObjectID;
 }
+
+// Can these be shared with the conversation tags?
+export enum TagType {
+  chat = 'chat',
+}
+
+registerEnumType(TagType, {
+  name: 'TagType',
+});
+
+@InputType()
+export class TagDto {
+  @Field()
+  id: string;
+
+  @Field(() => TagType)
+  type: TagType;
+}
+
+@InputType()
+export class TagsDto {
+  @Field(() => ObjectID)
+  messageId: ObjectID;
+
+  @Field(() => ObjectID)
+  conversationId: ObjectID;
+
+  @Field(() => [TagDto])
+  tags: TagDto[];
+}

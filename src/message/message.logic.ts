@@ -13,6 +13,7 @@ import {
   ResolveMessageDto,
   ReactionDto,
   PollOptionDto,
+  TagsDto,
 } from './models/message.dto';
 import { MessageData } from './message.data';
 import { IAuthenticatedUser } from '../authentication/jwt.strategy';
@@ -278,7 +279,6 @@ export class MessageLogic implements IMessageLogic {
     return blockedUsers.map((user) => user.blockedUserId);
   }
 
-
   async getChatConversationMessages(
     getMessageDto: GetMessageDto,
     authenticatedUser: IAuthenticatedUser,
@@ -313,7 +313,6 @@ export class MessageLogic implements IMessageLogic {
       paginatedChatMessages,
       blockedUserIds,
     );
-  
 
     return paginatedChatMessages;
   }
@@ -564,6 +563,24 @@ export class MessageLogic implements IMessageLogic {
     this.conversationChannel.send(
       messageEvent,
       reaction.conversationId.toHexString(),
+    );
+
+    return message;
+  }
+
+  async updateTags(
+    tags: TagsDto,
+    authenticatedUser: IAuthenticatedUser,
+  ): Promise<ChatMessage> {
+    await this.throwForbiddenErrorIfNotAuthorized(
+      authenticatedUser,
+      tags.messageId,
+      Action.readConversation,
+    );
+
+    const message = await this.messageData.updateTags(
+      tags.messageId,
+      tags.tags,
     );
 
     return message;

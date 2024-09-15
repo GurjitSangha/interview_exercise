@@ -12,6 +12,8 @@ import {
   LikeMessageDto,
   ReactionDto,
   PollDto,
+  TagType,
+  TagsDto,
 } from './models/message.dto';
 import { ObjectID } from 'mongodb';
 import { IAuthenticatedUser } from '../authentication/jwt.strategy';
@@ -48,6 +50,7 @@ const chatMessage: ChatMessage = {
   resolved: false,
   likes: [],
   likesCount: 0,
+  tags: [],
 };
 
 describe('MessageResolver', () => {
@@ -194,6 +197,13 @@ describe('MessageResolver', () => {
       messagesFilterInput: MessagesFilterInput,
     ): Promise<MessageGroupedByConversationOutput[]> {
       return Promise.resolve([]);
+    }
+
+    updateTagsOfMessage(
+      tagsDto: TagsDto,
+      authenticatedUser?: IAuthenticatedUser,
+    ): Promise<ChatMessage> {
+      return Promise.resolve(chatMessage);
     }
   }
 
@@ -516,6 +526,28 @@ describe('MessageResolver', () => {
           userId,
         },
       );
+    });
+  });
+
+  describe('update tags of a message', () => {
+    it('should add tags to a message', () => {
+      jest.spyOn(messageLogic, 'updateTagsOfMessage');
+
+      const tagsDto: TagsDto = {
+        messageId,
+        tags: [
+          {
+            id: 'tag1',
+            type: TagType.chat,
+          },
+        ],
+      };
+
+      resolver.updateTagsOfMessage(tagsDto, authenticatedUser);
+      expect(messageLogic.updateTagsOfMessage).toBeCalledWith(tagsDto, {
+        accountRole: 'admin',
+        userId,
+      });
     });
   });
 
