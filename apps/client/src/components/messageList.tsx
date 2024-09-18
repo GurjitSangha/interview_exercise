@@ -1,3 +1,4 @@
+import React from 'react';
 import { Message } from './message';
 
 export interface IMessageProps {
@@ -16,7 +17,7 @@ interface IMessageListProps {
 export const MessageList = ({ messages }: IMessageListProps) => {
   return (
     <div className="flex flex-col items-end h-screen gap-2 mt-10 overflow-y-auto w-80">
-      {messages.map((message) => (
+      {messages?.map((message) => (
         <Message key={message.id} message={message} />
       ))}
     </div>

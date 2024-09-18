@@ -20,7 +20,10 @@ export const createClient = async (
 ) => {
   const client = new GraphQLClient(`${import.meta.env.VITE_API_URL}/graphql`);
 
-  const token = await encodeToken(tokenContent, 'ssssh');
+  const token = await encodeToken(
+    tokenContent,
+    import.meta.env.VITE_JWT_SECRET,
+  );
   client.setHeader('authorization', `JWT ${token}`);
 
   return client;

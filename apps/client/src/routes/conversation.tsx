@@ -1,4 +1,5 @@
-import { Form, Link, useActionData, useLoaderData } from 'react-router-dom';
+import React from 'react';
+import { Form, Link, useLoaderData } from 'react-router-dom';
 import { MessageList } from '../components/messageList';
 import { createClient } from '../lib/graphql/client';
 import {
@@ -31,7 +32,7 @@ export async function action({ request, params }) {
   const formData = await request.formData();
   const message = formData.get('message');
   const client = await createClient();
-  const result = await client.request(sendConversationMessageMutation, {
+  await client.request(sendConversationMessageMutation, {
     messageDto: {
       conversationId: params.id,
       text: message,
@@ -39,21 +40,19 @@ export async function action({ request, params }) {
     },
   });
 
-  return { message: result?.sendConversationMessage?.message };
+  return null;
 }
 
 const Conversation = () => {
   const data = useLoaderData();
-  const actionResult = useActionData();
-  console.log({ data, actionResult });
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen text-white bg-slate-700">
       {!data && <span>Loading...</span>}
-      {data?.messages?.length === 0 ? (
-        <span>No messages yet</span>
-      ) : (
+      {data?.messages?.length > 0 ? (
         <MessageList messages={data.messages} />
+      ) : (
+        <span>No messages yet</span>
       )}
 
       <Form method="POST" className="flex items-center gap-4 my-4">

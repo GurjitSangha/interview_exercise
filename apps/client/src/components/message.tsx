@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface IMessageProps {
   message: {
     text: string;
