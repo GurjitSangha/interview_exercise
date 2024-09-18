@@ -1,0 +1,19 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/users/599ebd736a1d100004aeb744"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "account_role": "university",
+        "email": "edinburgh+admin@unibuddy.co",
+        "first_name": "Uni",
+        "id": "599ebd736a1d100004aeb744",
+        "last_name": "Admin",
+        "profile_photo": null
+      }
+    }
+  }
+]

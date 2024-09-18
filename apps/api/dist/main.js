@@ -24,6 +24,9 @@ async function bootstrap() {
     const document = swagger_1.SwaggerModule.createDocument(app, config, {
         deepScanRoutes: true,
     });
+    app.enableCors({
+        origin: 'http://localhost:5173',
+    });
     (0, fs_1.writeFileSync)((0, path_1.join)(process.cwd(), './openapi.json'), JSON.stringify(document, null, 4));
     swagger_1.SwaggerModule.setup('api', app, document);
     await app.listen(3000);

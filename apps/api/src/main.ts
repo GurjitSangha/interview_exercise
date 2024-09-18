@@ -29,6 +29,10 @@ async function bootstrap() {
     deepScanRoutes: true,
   });
 
+  app.enableCors({
+    origin: 'http://localhost:5173',
+  });
+
   writeFileSync(
     join(process.cwd(), './openapi.json'),
     JSON.stringify(document, null, 4),

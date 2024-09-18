@@ -8,8 +8,11 @@ services:
     environment:
       MOCKSERVER_MAX_EXPECTATIONS: 100
       MOCKSERVER_MAX_HEADER_SIZE: 8192
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mockserver/expectations.json
+    volumes:
+      - ./config:/config
     healthcheck:
-      test: ["CMD", "java", "-version"]
+      test: ['CMD', 'java', '-version']
       interval: 10s
       timeout: 10s
       retries: 3
@@ -34,11 +37,9 @@ services:
       timeout: 10s
       retries: 3
 
-
   redis:
     image: redis:6.0.20-alpine
     ports:
       - 6379:6379
     healthcheck:
-      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
- 
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
