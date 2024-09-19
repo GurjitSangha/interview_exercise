@@ -568,7 +568,7 @@ export class MessageLogic implements IMessageLogic {
     return message;
   }
 
-  async updateTags(
+  async updateTagsOfMessage(
     tags: TagsDto,
     authenticatedUser: IAuthenticatedUser,
   ): Promise<ChatMessage> {

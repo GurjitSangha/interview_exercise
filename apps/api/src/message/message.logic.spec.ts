@@ -1311,8 +1311,12 @@ describe('MessageLogic', () => {
     it('should call the data layer to update the tags', async () => {
       jest.spyOn(messageData, 'updateTags');
 
-      const tags = { messageId, tags: [{ id: 'tag1', type: TagType.chat }] };
-      await messageLogic.updateTags(tags, validUser);
+      const tags = {
+        messageId,
+        conversationId: new ObjectId(),
+        tags: [{ id: 'tag1', type: TagType.chat }],
+      };
+      await messageLogic.updateTagsOfMessage(tags, validUser);
 
       expect(messageData.updateTags).toHaveBeenCalledWith(messageId, tags.tags);
     });

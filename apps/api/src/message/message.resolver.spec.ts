@@ -535,6 +535,7 @@ describe('MessageResolver', () => {
 
       const tagsDto: TagsDto = {
         messageId,
+        conversationId: new ObjectID(),
         tags: [
           {
             id: 'tag1',

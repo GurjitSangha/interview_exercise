@@ -172,7 +172,10 @@ export class MessageResolver {
     @Args('tagsDto') tagsDto: TagsDto,
     @AuthenticatedUser() authenticatedUser: IAuthenticatedUser,
   ): Promise<ChatMessage> {
-    return await this.messageLogic.updateTags(tagsDto, authenticatedUser);
+    return await this.messageLogic.updateTagsOfMessage(
+      tagsDto,
+      authenticatedUser,
+    );
   }
 
   @ResolveField()
